@@ -4,14 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Coordenação - Sistema Bundy</title>
+
+    <!-- CSS principal (global e página específica) -->
+    <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./style/cordenacao.css" />
+
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
 
   <body>
     <!-- BOTÃO FIXO MENU -->
     <button id="toggleMenu" class="toggle-btn">
-      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
     </button>
 
     <!-- SIDEBAR -->
@@ -20,6 +27,7 @@
         <img src="./assets/logo.png" alt="Logo Bundy" class="logo" />
         <h2 class="logo-text">Bundy System</h2>
       </div>
+
       <nav class="menu">
         <ul>
           <li><a href="index.html">🏠 Início</a></li>
@@ -38,17 +46,19 @@
       <!-- 🔹 FILTROS -->
       <div class="filtros">
         <div>
-          <label>Data:</label>
+          <label for="filtroData">Data:</label>
           <input type="date" id="filtroData" />
         </div>
+
         <div>
-          <label>Tipo:</label>
+          <label for="filtroTipo">Tipo:</label>
           <select id="filtroTipo">
             <option value="">Todos</option>
           </select>
         </div>
+
         <div>
-          <label>Status:</label>
+          <label for="filtroStatus">Status:</label>
           <select id="filtroStatus">
             <option value="">Todos</option>
             <option value="Liberada">Liberada</option>
@@ -56,14 +66,16 @@
             <option value="Bloqueada">Bloqueada</option>
           </select>
         </div>
+
         <div>
-          <label>Turno:</label>
+          <label for="filtroTurno">Turno:</label>
           <select id="filtroTurno">
             <option value="">Todos</option>
             <option value="1º Turno">1º Turno</option>
             <option value="2º Turno">2º Turno</option>
           </select>
         </div>
+
         <button id="btnFiltrar">Filtrar</button>
         <button id="btnLimpar">Limpar</button>
       </div>
@@ -87,6 +99,8 @@
       </div>
     </main>
 
+    <!-- Scripts -->
     <script src="./script/cordenacao.js"></script>
+    <script src="./script/menu.js"></script>
   </body>
 </html>
