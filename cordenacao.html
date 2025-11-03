@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coordenação - Sistema Bundy</title>
+    <link rel="stylesheet" href="./style/cordenacao.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <!-- BOTÃO FIXO MENU -->
+    <button id="toggleMenu" class="toggle-btn">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo-area">
+        <img src="./assets/logo.png" alt="Logo Bundy" class="logo" />
+        <h2 class="logo-text">Bundy System</h2>
+      </div>
+      <nav class="menu">
+        <ul>
+          <li><a href="index.html">🏠 Início</a></li>
+          <li><a href="estoqueCompleto.html">📦 Estoque</a></li>
+          <li><a href="cadastroMaterial.html">🧾 Cadastro</a></li>
+          <li><a href="cordenacao.html" class="active">📊 Coordenação</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="content">
+      <h1>📊 Painel de Coordenação</h1>
+      <p>Visão analítica em tempo real — produção e estoque Bundy</p>
+
+      <!-- 🔹 FILTROS -->
+      <div class="filtros">
+        <div>
+          <label>Data:</label>
+          <input type="date" id="filtroData" />
+        </div>
+        <div>
+          <label>Tipo:</label>
+          <select id="filtroTipo">
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <div>
+          <label>Status:</label>
+          <select id="filtroStatus">
+            <option value="">Todos</option>
+            <option value="Liberada">Liberada</option>
+            <option value="Aguardando Laudo">Aguardando Laudo</option>
+            <option value="Bloqueada">Bloqueada</option>
+          </select>
+        </div>
+        <div>
+          <label>Turno:</label>
+          <select id="filtroTurno">
+            <option value="">Todos</option>
+            <option value="1º Turno">1º Turno</option>
+            <option value="2º Turno">2º Turno</option>
+          </select>
+        </div>
+        <button id="btnFiltrar">Filtrar</button>
+        <button id="btnLimpar">Limpar</button>
+      </div>
+
+      <!-- 🔹 DASHBOARD -->
+      <div class="dashboard">
+        <div class="card grafico">
+          <h2>Status das Bobinas</h2>
+          <canvas id="graficoStatus"></canvas>
+        </div>
+
+        <div class="card grafico">
+          <h2>Distribuição por Tipo</h2>
+          <canvas id="graficoTipo"></canvas>
+        </div>
+
+        <div class="card grafico">
+          <h2>Peso Total por Turno</h2>
+          <canvas id="graficoTurno"></canvas>
+        </div>
+      </div>
+    </main>
+
+    <script src="./script/cordenacao.js"></script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Bobinas - Sistema Bundy</title>
+    <link rel="stylesheet" href="./style/cadastro.css" />
+  </head>
+
+  <body>
+    <!-- BOTÃO FIXO PARA MENU -->
+    <button id="toggleMenu" class="toggle-btn">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo-area">
+        <img src="assets/logo.png" alt="Logo Bundy" class="logo" />
+        <h2 class="logo-text">Bundy System</h2>
+      </div>
+
+      <nav class="menu">
+        <ul>
+          <li><a href="index.html">🏠 Início</a></li>
+          <li><a href="estoqueCompleto.html">📦 Estoque</a></li>
+          <li><a href="cadastroMaterial.html" class="active">🧾 Cadastro</a></li>
+          <li><a href="#">🧪 Laboratório</a></li>
+          <li><a href="#">✔️ Qualidade</a></li>
+          <li><a href="./cordenacao.html">📊 Coordenação</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main class="content">
+      <h1>Cadastro de Bobinas</h1>
+      <p>Preencha os campos abaixo para registrar uma nova bobina no sistema.</p>
+
+      <form id="formEstoque" class="form-estoque">
+        <div class="input-group">
+          <label for="rastro">Rastro:</label>
+          <input type="text" id="rastro" placeholder="Rastro" required />
+        </div>
+
+        <div class="input-group">
+          <label for="data">Data:</label>
+          <input type="date" id="data" required />
+        </div>
+
+        <div class="input-group">
+          <label for="turno">Turno:</label>
+          <select id="turno" required>
+            <option value="">Selecione</option>
+            <option value="1º Turno">1º Turno</option>
+            <option value="2º Turno">2º Turno</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="tipo">Tipo:</label>
+          <select id="tipo" required>
+            <option value="">Selecione</option>
+            <option value="PEWQ">PEWQ</option>
+            <option value="PEWS">PEWS</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="diametro">Diâmetro:</label>
+          <select id="diametro" required>
+            <option value="">Selecione</option>
+            <option value="4.00">4.00</option>
+            <option value="4.76">4.76</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="comprimento">Comprimento (mm):</label>
+          <input type="number" id="comprimento" required />
+        </div>
+
+        <div class="input-group">
+          <label for="peso">Peso (kg):</label>
+          <input type="number" id="peso" step="0.01" required />
+        </div>
+
+        <div class="input-group">
+          <label for="furos">Furos:</label>
+          <input type="number" id="furos" required />
+        </div>
+
+        <div class="input-group">
+          <label for="observacoes">Observações:</label>
+          <textarea id="observacoes" placeholder="Observações (opcional)"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label for="status">Status:</label>
+          <select id="status" required>
+            <option value="">Selecione</option>
+            <option value="Liberada">Liberada</option>
+            <option value="Aguardando Laudo">Aguardando Laudo</option>
+          </select>
+        </div>
+
+        <div class="button-area">
+          <button type="submit" class="btn salvar">💾 Salvar Bobina</button>
+          <button type="reset" class="btn limpar">🧹 Limpar</button>
+        </div>
+      </form>
+    </main>
+
+    <script src="./script/estoque.js"></script>
+  </body>
+</html>

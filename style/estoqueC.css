@@ -1,0 +1,468 @@
+@import url(../style.css);
+
+/* ===== LAYOUT GERAL ===== */
+body {
+  display: flex;
+  background-color: #0d1b2a;
+  color: #e0e6ed;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ===== CONTEÚDO ===== */
+.content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 30px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* ===== HEADER ===== */
+.estoque-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.estoque-header h1 {
+  color: #5fa8d3;
+  font-size: 1.8em;
+}
+.dashboard {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  background-color: #142c44;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== FILTROS ===== */
+.filtros {
+  background-color: #142c44;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+}
+.filtro-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+.filtros h2 {
+  color: #5fa8d3;
+  margin-bottom: 5px;
+}
+.filtros button {
+  background-color: #1e3a5f;
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.filtros button:hover {
+  background-color: #27496d;
+}
+.filtros input {
+  background-color: #0a192f;
+  border: 1px solid #1e3a5f;
+  color: #e0e6ed;
+  border-radius: 6px;
+  padding: 8px;
+  outline: none;
+  flex: 1;
+  min-width: 150px;
+}
+.filtros input:focus {
+  border-color: #5fa8d3;
+}
+
+/* ===== SELETOR DE MODO VISUAL ===== */
+.modo-visual {
+  background-color: #142c44;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+.modo-visual label {
+  font-weight: bold;
+  color: #5fa8d3;
+}
+.modo-visual select {
+  background-color: #0a192f;
+  border: 1px solid #1e3a5f;
+  color: #e0e6ed;
+  padding: 6px 10px;
+  border-radius: 6px;
+  outline: none;
+}
+.modo-visual select:focus {
+  border-color: #5fa8d3;
+}
+
+/* ===== LISTA DE BOBINAS ===== */
+.lista-bobinas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  align-items: start;
+  padding-bottom: 40px;
+}
+
+/* ==========================================================
+   NOVO ESTILO 1: INDUSTRIAL 3D (VISUAL ATUALIZADO)
+   ========================================================== */
+/* ==========================================================
+   ESTILO 1: INDUSTRIAL 3D (VISUAL IGUAL AO DASHBOARD, COM CORES)
+   ========================================================== */
+.card-bobina.estilo1 {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  max-width: 340px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #142c44;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s, box-shadow 0.3s;
+}
+
+.card-bobina.estilo1:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(95, 168, 211, 0.5);
+}
+
+/* ===== BARRA LATERAL DE STATUS ===== */
+.card-bobina.estilo1 .left-status {
+  width: 10px;
+  transition: background 0.3s;
+}
+
+.card-bobina.estilo1 .left-status.verde {
+  background-color: #16a34a;
+}
+.card-bobina.estilo1 .left-status.amarelo {
+  background-color: #eab308;
+}
+.card-bobina.estilo1 .left-status.vermelho {
+  background-color: #dc2626;
+}
+
+/* ===== CONTEÚDO ===== */
+.card-bobina.estilo1 .right-info {
+  flex: 1;
+  padding: 12px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #cbd5e1;
+}
+
+.card-bobina.estilo1 h3 {
+  color: #5fa8d3;
+  font-size: 1.1em;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.card-bobina.estilo1 p {
+  margin: 3px 0;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-bobina.estilo1 b {
+  color: #e2e8f0;
+}
+
+.card-bobina.estilo1 em {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* ===== BOTÃO DE DETALHES ===== */
+.card-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-detalhes {
+  background-color: #2563eb;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+}
+
+.btn-detalhes:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.03);
+}
+
+
+/* ==========================================================
+   ESTILO 2: DASHBOARD TECNOLÓGICO
+   ========================================================== */
+.card-bobina.estilo2 {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  max-width: 340px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #142c44;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s, box-shadow 0.3s;
+}
+.card-bobina.estilo2:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(95, 168, 211, 0.5);
+}
+.left-status {
+  width: 8px;
+}
+.card-bobina.estilo2.verde .left-status { background: #16a34a; }
+.card-bobina.estilo2.amarelo .left-status { background: #eab308; }
+.card-bobina.estilo2.vermelho .left-status { background: #dc2626; }
+
+.right-info {
+  flex: 1;
+  padding: 12px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #cbd5e1;
+}
+.right-info h3 {
+  color: #5fa8d3;
+  font-size: 1.1em;
+  margin-bottom: 6px;
+  text-align: center;
+}
+.right-info p {
+  margin: 4px 0;
+  font-size: 0.9em;
+}
+.right-info b::before {
+  content: "⚙️ ";
+  font-size: 0.9em;
+  color: #5fa8d3;
+}
+
+/* ==========================================================
+   ESTILO 3: MINIMALISTA MODERNO
+   ========================================================== */
+.card-bobina.estilo3 {
+  background: #142c44;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s, box-shadow 0.3s;
+  color: #e2e8f0;
+  text-align: center;
+}
+.card-bobina.estilo3:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 16px rgba(95, 168, 211, 0.4);
+}
+.topbar {
+  height: 6px;
+  width: 100%;
+}
+.card-bobina.liberada .topbar { background: #16a34a; }
+.card-bobina.bloqueada .topbar { background: #dc2626; }
+.card-bobina.aguardando .topbar { background: #eab308; }
+.card-body {
+  padding: 15px;
+}
+.card-body h3 {
+  color: #5fa8d3;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+.card-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.card-body li {
+  margin: 5px 0;
+  font-size: 0.9em;
+  color: #cbd5e1;
+}
+.card-body li::before {
+  content: "🔹 ";
+  color: #5fa8d3;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background-color: #1e3a5f; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background-color: #5fa8d3; }
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0;
+    padding: 20px;
+  }
+  .dashboard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* ===== BOTÃO "VER DETALHES" ===== */
+.btn-detalhes {
+  margin-top: 10px;
+  background-color: #2563eb;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+  align-self: center;
+}
+.btn-detalhes:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.03);
+}
+
+/* ===== MODAL DE DETALHES ===== */
+.modal-detalhes {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 25, 47, 0.8);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-content {
+  background-color: #142c44;
+  color: #e2e8f0;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 0 20px rgba(95, 168, 211, 0.4);
+  position: relative;
+  animation: aparecer 0.3s ease-out;
+}
+.modal-content h2 {
+  color: #5fa8d3;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.modal-content ul {
+  list-style: none;
+  padding: 0;
+}
+.modal-content li {
+  margin: 6px 0;
+  font-size: 0.95em;
+}
+.modal-content b {
+  color: #5fa8d3;
+}
+.modal-content em {
+  color: #94a3b8;
+}
+.modal-content .fechar {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-content .fechar:hover {
+  color: #fff;
+}
+
+/* animação de entrada */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* ===== BADGE DE STATUS ===== */
+.badge-status {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+/* cores */
+.badge-status.verde {
+  background-color: #16a34a;
+}
+.badge-status.amarelo {
+  background-color: #eab308;
+  color: #1e293b;
+}
+.badge-status.vermelho {
+  background-color: #dc2626;
+}
+
+/* posicionamento dentro do card */
+.card-bobina.estilo1 {
+  position: relative;
+}
+.btn-demo {
+  background-color: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-demo:hover {
+  background-color: #15803d;
+  transform: scale(1.05);
+}

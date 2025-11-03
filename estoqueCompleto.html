@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque Completo - Sistema Bundy</title>
+    <link rel="stylesheet" href="./style/estoqueC.css">
+  </head>
+
+  <body>
+    <!-- BOTÃO FIXO PARA MENU -->
+    <button id="toggleMenu" class="toggle-btn">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo-area">
+        <img src="assets/logo.png" alt="Logo Bundy" class="logo">
+        <h2 class="logo-text">Bundy System</h2>
+      </div>
+
+      <nav class="menu">
+        <ul>
+          <li><a href="index.html">🏠 Início</a></li>
+          <li><a href="cadastroMaterial.html">🧾 Cadastro</a></li>
+          <li><a href="estoqueCompleto.html" class="active">📦 Estoque</a></li>
+          <li><a href="#">🧪 Laboratório</a></li>
+          <li><a href="#">✔️ Qualidade</a></li>
+          <li><a href="./cordenacao.html">📊 Coordenação</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="content">
+      <header class="estoque-header">
+        <h1>Estoque de Bobinas</h1>
+        <div class="dashboard">
+          <div><strong>Total de Bobinas:</strong> <span id="totalBobinas">0</span></div>
+          <div><strong>Peso Total (kg):</strong> <span id="pesoTotal">0</span></div>
+        </div>
+        <button id="gerarDemo" class="btn-demo">💾 Gerar Dados de Demonstração</button>
+
+      </header>
+
+      <!-- FILTROS -->
+      <section class="filtros">
+        <h2>Filtros</h2>
+        <div class="filtro-container">
+          <button onclick="filtrar('todas')">Todas</button>
+          <button onclick="filtrar('Liberada')">Liberadas</button>
+          <button onclick="filtrar('Aguardando Laudo')">Aguardando</button>
+          <button onclick="filtrar('Bloqueada')">Bloqueadas</button>
+          <input type="date" id="filtroData" onchange="filtrarData()">
+          <input type="text" id="filtroRastro" placeholder="Buscar por rastro" oninput="filtrarRastro()">
+        </div>
+      </section>
+
+      <!-- SELETOR DE MODO VISUAL -->
+      <section class="modo-visual">
+        <label for="selectVisual">🎨 Modo Visual:</label>
+        <select id="selectVisual" onchange="mudarVisual()">
+          <option value="estilo1">Industrial 3D</option>
+          <option value="estilo2">Dashboard Tecnológico</option>
+          <option value="estilo3">Minimalista Moderno</option>
+        </select>
+      </section>
+
+      <!-- LISTA DE BOBINAS -->
+      <section id="listaBobinas" class="lista-bobinas">
+        <!-- Os cards são renderizados via estoqueLogica.js -->
+      </section>
+    </main>
+
+    <script src="./script/estoqueLogica.js"></script>
+
+    <script>
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.getElementById('toggleMenu');
+
+      toggleBtn.addEventListener('click', () => {
+        toggleBtn.classList.toggle('active');
+        if (window.innerWidth <= 768) {
+          sidebar.classList.toggle('active');
+        } else {
+          sidebar.classList.toggle('hidden');
+        }
+      });
+    </script>
+    <script src="./script/demo.js"></script>
+  </body>
+</html>
