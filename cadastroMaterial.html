@@ -30,6 +30,8 @@
           <li><a href="#">🧪 Laboratório</a></li>
           <li><a href="#">✔️ Qualidade</a></li>
           <li><a href="./cordenacao.html">📊 Coordenação</a></li>
+          <li><a href="scanner.html">📷 Scanner QR</a></li>
+
         </ul>
       </nav>
     </aside>
@@ -113,7 +115,27 @@
       </form>
     </main>
 
-    <script src="./script/estoque.js"></script>
-    <script src="./script/menu.js"></script>
+<!-- Scripts -->
+<script src="./script/menu.js"></script>
+<script src="./script/setorAcesso.js"></script>
+
+<!-- Biblioteca de QR Code e lógica de geração -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+<script src="./script/qr.js"></script>
+
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleMenu');
+
+  toggleBtn.addEventListener('click', () => {
+    toggleBtn.classList.toggle('active');
+    if (window.innerWidth <= 768) {
+      sidebar.classList.toggle('active');
+    } else {
+      sidebar.classList.toggle('hidden');
+    }
+  });
+</script>
+
   </body>
 </html>

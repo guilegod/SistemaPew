@@ -1,0 +1,20 @@
+.scanner-box {
+  width: 100%;
+  max-width: 400px;
+  margin: 30px auto;
+  border: 3px solid #5fa8d3;
+  border-radius: 10px;
+  background-color: #0a192f;
+  box-shadow: 0 0 20px rgba(95, 168, 211, 0.4);
+}
+
+#qr-reader video {
+  border-radius: 10px;
+}
+
+#qr-reader-results {
+  text-align: center;
+  margin-top: 15px;
+  color: #5fa8d3;
+  font-weight: bold;
+}

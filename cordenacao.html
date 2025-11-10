@@ -34,6 +34,8 @@
           <li><a href="estoqueCompleto.html">📦 Estoque</a></li>
           <li><a href="cadastroMaterial.html">🧾 Cadastro</a></li>
           <li><a href="cordenacao.html" class="active">📊 Coordenação</a></li>
+          <li><a href="scanner.html">📷 Scanner QR</a></li>
+
         </ul>
       </nav>
     </aside>
@@ -102,5 +104,20 @@
     <!-- Scripts (ordem importa!) -->
     <script src="./script/cordenacao.js"></script>
     <script src="./script/menu.js"></script>
+    <script src="./script/setorAcesso.js"></script>
+    <script>
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleMenu');
+
+  toggleBtn.addEventListener('click', () => {
+    toggleBtn.classList.toggle('active');
+    if (window.innerWidth <= 768) {
+      sidebar.classList.toggle('active');
+    } else {
+      sidebar.classList.toggle('hidden');
+    }
+  });
+</script>
+
   </body>
 </html>

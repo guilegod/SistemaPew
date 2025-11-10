@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scanner de QR - Sistema Bundy</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./style/scanner.css" />
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  </head>
+
+  <body>
+    <!-- BOTÃO FIXO MENU -->
+    <button id="toggleMenu" class="toggle-btn">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo-area">
+        <img src="./assets/logo.png" alt="Logo Bundy" class="logo" />
+        <h2 class="logo-text">Bundy System</h2>
+      </div>
+      <nav class="menu">
+        <ul>
+          <li><a href="index.html">🏠 Início</a></li>
+          <li><a href="estoqueCompleto.html">📦 Estoque</a></li>
+          <li><a href="cadastroMaterial.html">🧾 Cadastro</a></li>
+          <li><a href="cordenacao.html">📊 Coordenação</a></li>
+          <li><a href="scanner.html" class="active">📷 Scanner QR</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="content">
+      <h1>📷 Leitor de QR Code</h1>
+      <p>Posicione a câmera sobre o código da bobina para abrir seus detalhes.</p>
+
+      <div id="qr-reader" class="scanner-box"></div>
+      <div id="qr-reader-results"></div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="./script/menu.js"></script>
+    <script>
+      // Configura o scanner
+      function onScanSuccess(decodedText) {
+        document.getElementById("qr-reader-results").innerHTML =
+          `<p>✅ QR Lido: ${decodedText}</p>`;
+        if (decodedText.includes("bobina.html")) {
+          window.location.href = decodedText;
+        } else {
+          alert("QR inválido! Este código não pertence a uma bobina.");
+        }
+      }
+
+      function onScanFailure(error) {
+        console.warn(`Erro ao ler: ${error}`);
+      }
+
+      const html5QrCode = new Html5Qrcode("qr-reader");
+      html5QrCode
+        .start(
+          { facingMode: "environment" },
+          {
+            fps: 10,
+            qrbox: 250,
+          },
+          onScanSuccess,
+          onScanFailure
+        )
+        .catch((err) => {
+          console.error("Erro ao iniciar câmera:", err);
+          alert("❌ Erro ao acessar a câmera. Verifique as permissões!");
+        });
+    </script>
+  </body>
+</html>

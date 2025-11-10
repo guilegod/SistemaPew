@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalhes da Bobina - Sistema Bundy</title>
+  <link rel="stylesheet" href="./style/style.css" />
+  <style>
+    .bobina-box{background:#142c44;color:#e2e8f0;border-radius:12px;padding:20px;width:90%;max-width:520px;margin:50px auto;box-shadow:0 0 12px rgba(0,0,0,.5)}
+    h1{color:#5fa8d3;text-align:center}
+    p{margin:8px 0}
+    .actions{margin-top:12px;text-align:center}
+    .actions a{color:#5fa8d3}
+  </style>
+</head>
+<body>
+  <main class="content">
+    <h1>📦 Detalhes da Bobina</h1>
+    <div id="bobinaInfo" class="bobina-box">Carregando...</div>
+    <div class="actions">
+      <a href="scanner.html">📷 Ler outro QR</a> • <a href="index.html">🏠 Início</a>
+    </div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const rastro = decodeURIComponent(params.get("rastro") || "");
+    const bobinas = JSON.parse(localStorage.getItem("bobinas")) || [];
+    const b = bobinas.find(x => (x.rastro||"").trim() === rastro.trim());
+    const box = document.getElementById("bobinaInfo");
+
+    if (b) {
+      box.innerHTML = `
+        <p><strong>Rastro:</strong> ${b.rastro}</p>
+        <p><strong>Data:</strong> ${b.data || "-"}</p>
+        <p><strong>Tipo:</strong> ${b.tipo || "-"}</p>
+        <p><strong>Diâmetro:</strong> ${b.diametro || "-"}</p>
+        <p><strong>Furos:</strong> ${b.furos ?? "-"}</p>
+        <p><strong>Comprimento:</strong> ${b.comprimento || "-"} m</p>
+        <p><strong>Peso:</strong> ${b.peso ?? "-"} kg</p>
+        <p><strong>Status:</strong> ${b.status || "-"}</p>
+        <p><strong>Observações:</strong> ${b.observacoes || "Nenhuma"}</p>
+        <p><strong>Turno:</strong> ${b.turno || "-"}</p>
+      `;
+    } else {
+      box.innerHTML = `<p>❌ Bobina "${rastro}" não encontrada no dispositivo.</p>
+                       <p>Verifique se ela foi cadastrada neste aparelho.</p>`;
+    }
+  </script>
+  <script>
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleMenu');
+
+  toggleBtn.addEventListener('click', () => {
+    toggleBtn.classList.toggle('active');
+    if (window.innerWidth <= 768) {
+      sidebar.classList.toggle('active');
+    } else {
+      sidebar.classList.toggle('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
