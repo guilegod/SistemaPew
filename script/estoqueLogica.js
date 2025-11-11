@@ -139,15 +139,23 @@ async function abrirDetalhes(bobina) {
   injectModalCssOnce();
 
   /// 🔗 Gera QRCode dinâmico — detecta Render, Netlify ou local automaticamente
+l// 🔗 Gera QRCode dinâmico — detecta Render, Netlify ou local automaticamente
 let baseHost;
 if (window.location.hostname.includes("192.168") || window.location.hostname.includes("localhost")) {
   baseHost = `http://${window.location.hostname}:5500`; // ambiente local
 } else {
-  baseHost = "https://sistemapew.netlify.app"; // domínio do seu front hospedado
+  baseHost = "https://subtle-kringle-ed6d02.netlify.app"; // domínio real do seu site hospedado
 }
 
-// ✅ Garante prefixo correto (sem https://https://)
-const qr = await gerarQRBase64(`${baseHost}/bobina.html?rastro=${encodeURIComponent(bobina.rastro)}`, 180);
+// ✅ Corrige possíveis duplicações de "https://"
+const cleanHost = baseHost.replace(/^https?:\/\//, "https://");
+
+// 🔗 Gera o link do QR Code com o domínio certo
+const qr = await gerarQRBase64(
+  `${cleanHost}/bobina.html?rastro=${encodeURIComponent(bobina.rastro)}`,
+  180
+);
+
 
   const holder = modal.querySelector("#qrHolder");
   holder.innerHTML = `<img src="${qr}" width="180" alt="QR Code" class="qr-image">`;
