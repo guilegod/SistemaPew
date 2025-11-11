@@ -138,9 +138,16 @@ async function abrirDetalhes(bobina) {
   document.body.appendChild(modal);
   injectModalCssOnce();
 
-  // 🔗 IP fixo da sua máquina — para o QRCode apontar corretamente no celular
-  const backendHost = "https://sistemapew.onrender.com"; // <- se o front roda na porta 5500
-  const qr = await gerarQRBase64(`http://${backendHost}/bobina.html?rastro=${bobina.rastro}`, 180);
+  /// 🔗 Gera QRCode dinâmico — detecta Render, Netlify ou local automaticamente
+let baseHost;
+if (window.location.hostname.includes("192.168") || window.location.hostname.includes("localhost")) {
+  baseHost = `http://${window.location.hostname}:5500`; // ambiente local
+} else {
+  baseHost = "https://sistemapew.netlify.app"; // domínio do seu front hospedado
+}
+
+// ✅ Garante prefixo correto (sem https://https://)
+const qr = await gerarQRBase64(`${baseHost}/bobina.html?rastro=${encodeURIComponent(bobina.rastro)}`, 180);
 
   const holder = modal.querySelector("#qrHolder");
   holder.innerHTML = `<img src="${qr}" width="180" alt="QR Code" class="qr-image">`;
