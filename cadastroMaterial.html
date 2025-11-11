@@ -4,63 +4,81 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastro de Bobinas - Sistema Bundy</title>
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./style/cadastro.css" />
+
+    <!-- QR Code JS -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
   </head>
 
   <body>
-    <!-- BOTÃO FIXO PARA MENU -->
+    <!-- BOTÃO FIXO MENU -->
     <button id="toggleMenu" class="toggle-btn">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
     </button>
 
-    <!-- ===== SIDEBAR ===== -->
+    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div class="logo-area">
-        <img src="assets/logo.png" alt="Logo Bundy" class="logo" />
+        <img src="./assets/logo.png" alt="Logo Bundy" class="logo" />
         <h2 class="logo-text">Bundy System</h2>
       </div>
-
       <nav class="menu">
         <ul>
           <li><a href="index.html">🏠 Início</a></li>
           <li><a href="estoqueCompleto.html">📦 Estoque</a></li>
           <li><a href="cadastroMaterial.html" class="active">🧾 Cadastro</a></li>
-          <li><a href="#">🧪 Laboratório</a></li>
-          <li><a href="#">✔️ Qualidade</a></li>
-          <li><a href="./cordenacao.html">📊 Coordenação</a></li>
-          <li><a href="scanner.html">📷 Scanner QR</a></li>
-
+          <li><a href="cordenacao.html">📊 Coordenação</a></li>
+          <li><a href="scanner.html">📷 Scanner</a></li>
         </ul>
       </nav>
     </aside>
 
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <!-- CONTEÚDO -->
     <main class="content">
-      <h1>Cadastro de Bobinas</h1>
-      <p>Preencha os campos abaixo para registrar uma nova bobina no sistema.</p>
+      <h1>🧾 Cadastro de Bobinas</h1>
+      <p>Registre uma nova bobina com rastreamento automático, turno e linha identificados.</p>
 
       <form id="formEstoque" class="form-estoque">
+        <!-- Rastro -->
         <div class="input-group">
           <label for="rastro">Rastro:</label>
           <input type="text" id="rastro" placeholder="Rastro" required />
         </div>
 
+        <!-- Data -->
         <div class="input-group">
           <label for="data">Data:</label>
           <input type="date" id="data" required />
         </div>
 
+        <!-- Turno (preenchido automaticamente) -->
         <div class="input-group">
           <label for="turno">Turno:</label>
-          <select id="turno" required>
-            <option value="">Selecione</option>
-            <option value="1º Turno">1º Turno</option>
-            <option value="2º Turno">2º Turno</option>
+          <input type="text" id="turno" readonly />
+        </div>
+
+        <!-- Operador -->
+        <div class="input-group">
+          <label for="operador">Operador:</label>
+          <select id="operador" required>
+            <option value="">Selecione o Operador</option>
+            <option value="4172 - Marco">4172 - Marco (Linha 01)</option>
+            <option value="4181 - Milton">4181 - Milton (Linha 01)</option>
+            <option value="4233 - Gabriel">4233 - Gabriel (Linha 02)</option>
+            <option value="4290 - Dirceu">4290 - Dirceu (Linha 02)</option>
           </select>
         </div>
 
+        <!-- Linha de produção -->
+        <div class="input-group">
+          <label for="linha">Linha de Produção:</label>
+          <input type="text" id="linha" readonly placeholder="Definida automaticamente" />
+        </div>
+
+        <!-- Tipo -->
         <div class="input-group">
           <label for="tipo">Tipo:</label>
           <select id="tipo" required>
@@ -70,6 +88,7 @@
           </select>
         </div>
 
+        <!-- Diâmetro -->
         <div class="input-group">
           <label for="diametro">Diâmetro:</label>
           <select id="diametro" required>
@@ -79,63 +98,83 @@
           </select>
         </div>
 
+        <!-- Comprimento -->
         <div class="input-group">
           <label for="comprimento">Comprimento (mm):</label>
           <input type="number" id="comprimento" required />
         </div>
 
+        <!-- Peso -->
         <div class="input-group">
           <label for="peso">Peso (kg):</label>
           <input type="number" id="peso" step="0.01" required />
         </div>
 
+        <!-- Furos -->
         <div class="input-group">
           <label for="furos">Furos:</label>
           <input type="number" id="furos" required />
         </div>
 
+        <!-- Observações -->
         <div class="input-group">
           <label for="observacoes">Observações:</label>
           <textarea id="observacoes" placeholder="Observações (opcional)"></textarea>
         </div>
 
-        <div class="input-group">
-          <label for="status">Status:</label>
-          <select id="status" required>
-            <option value="">Selecione</option>
-            <option value="Liberada">Liberada</option>
-            <option value="Aguardando Laudo">Aguardando Laudo</option>
-          </select>
-        </div>
+        <!-- Status (oculto - definido automaticamente como “Aguardando Laudo”) -->
+        <input type="hidden" id="status" value="Aguardando Laudo" />
 
+        <!-- Botões -->
         <div class="button-area">
           <button type="submit" class="btn salvar">💾 Salvar Bobina</button>
           <button type="reset" class="btn limpar">🧹 Limpar</button>
         </div>
       </form>
+
+      <!-- QR Code Gerado -->
+      <div id="qrContainer" style="text-align:center; margin-top:25px;"></div>
     </main>
 
-<!-- Scripts -->
-<script src="./script/menu.js"></script>
-<script src="./script/setorAcesso.js"></script>
+    <!-- Scripts -->
+    <script src="./script/menu.js"></script>
+    <script>
+      // === Turno automático com base na hora atual ===
+      function identificarTurno() {
+        const hora = new Date().getHours();
+        if (hora >= 6 && hora < 14) return "1º Turno";
+        if (hora >= 14 && hora < 22) return "2º Turno";
+        return "3º Turno";
+      }
 
-<!-- Biblioteca de QR Code e lógica de geração -->
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-<script src="./script/qr.js"></script>
+      // === Linha automática com base no operador ===
+      const operadoresLinha = {
+        "4172 - Marco": "Linha 01",
+        "4181 - Milton": "Linha 01",
+        "4233 - Gabriel": "Linha 02",
+        "4290 - Dirceu": "Linha 02"
+      };
 
-<script>
-  const sidebar = document.getElementById('sidebar');
-  const toggleBtn = document.getElementById('toggleMenu');
+      document.addEventListener("DOMContentLoaded", () => {
+        const turnoInput = document.getElementById("turno");
+        const operadorSelect = document.getElementById("operador");
+        const linhaInput = document.getElementById("linha");
 
-  toggleBtn.addEventListener('click', () => {
-    toggleBtn.classList.toggle('active');
-    if (window.innerWidth <= 768) {
-      sidebar.classList.toggle('active');
-    } else {
-      sidebar.classList.toggle('hidden');
-    }
-  });
-</script>
+        // Define o turno automaticamente
+        turnoInput.value = identificarTurno();
 
+        // Define a linha conforme o operador
+        operadorSelect.addEventListener("change", () => {
+          const valor = operadorSelect.value;
+          linhaInput.value = operadoresLinha[valor] || "Não definida";
+        });
+
+        // Data atual automática
+        const dataInput = document.getElementById("data");
+        const hoje = new Date().toISOString().split("T")[0];
+        dataInput.value = hoje;
+      });
+    </script>
+    <script src="./script/cadastroMaterial.js"></script>
   </body>
 </html>

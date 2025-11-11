@@ -1,81 +1,43 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scanner de QR - Sistema Bundy</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./style/scanner.css" />
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-  </head>
-
-  <body>
-    <!-- BOTÃO FIXO MENU -->
-    <button id="toggleMenu" class="toggle-btn">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="logo-area">
-        <img src="./assets/logo.png" alt="Logo Bundy" class="logo" />
-        <h2 class="logo-text">Bundy System</h2>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Scanner QR - Sistema Bundy</title>
+  <style>
+    body{margin:0;background:#0d1b2a;color:#e2e8f0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    .wrap{max-width:860px;margin:0 auto;padding:16px}
+    h1{margin:8px 0 16px;color:#5fa8d3}
+    .card{background:#142c44;border-radius:12px;padding:16px;box-shadow:0 0 12px rgba(0,0,0,.35)}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+    .btn{background:#2563eb;border:0;color:#fff;border-radius:10px;padding:10px 14px;cursor:pointer}
+    .btn.secondary{background:#334155}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    video{width:100%;border-radius:12px;background:#000}
+    .status{margin-top:10px;font-size:14px;color:#94a3b8}
+    .result{margin-top:12px;background:#0a192f;border:1px solid #1e3a5f;border-radius:10px;padding:10px;word-break:break-all}
+  </style>
+  <!-- lib de leitura QR -->
+  <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>📷 Scanner QR – Sistema Bundy</h1>
+    <div class="card">
+      <div class="row">
+        <button id="btnStart" class="btn">Abrir câmera</button>
+        <button id="btnSwitch" class="btn secondary" disabled>Trocar câmera</button>
+        <span id="permHint" class="status"></span>
       </div>
-      <nav class="menu">
-        <ul>
-          <li><a href="index.html">🏠 Início</a></li>
-          <li><a href="estoqueCompleto.html">📦 Estoque</a></li>
-          <li><a href="cadastroMaterial.html">🧾 Cadastro</a></li>
-          <li><a href="cordenacao.html">📊 Coordenação</a></li>
-          <li><a href="scanner.html" class="active">📷 Scanner QR</a></li>
-        </ul>
-      </nav>
-    </aside>
 
-    <!-- CONTEÚDO -->
-    <main class="content">
-      <h1>📷 Leitor de QR Code</h1>
-      <p>Posicione a câmera sobre o código da bobina para abrir seus detalhes.</p>
+      <video id="preview" playsinline autoplay muted></video>
+      <canvas id="canvas" style="display:none"></canvas>
 
-      <div id="qr-reader" class="scanner-box"></div>
-      <div id="qr-reader-results"></div>
-    </main>
+      <div id="status" class="status">Aponte para um QR Code gerado pelo sistema.</div>
+      <div id="result" class="result" style="display:none"></div>
+    </div>
+  </div>
 
-    <!-- Scripts -->
-    <script src="./script/menu.js"></script>
-    <script>
-      // Configura o scanner
-      function onScanSuccess(decodedText) {
-        document.getElementById("qr-reader-results").innerHTML =
-          `<p>✅ QR Lido: ${decodedText}</p>`;
-        if (decodedText.includes("bobina.html")) {
-          window.location.href = decodedText;
-        } else {
-          alert("QR inválido! Este código não pertence a uma bobina.");
-        }
-      }
-
-      function onScanFailure(error) {
-        console.warn(`Erro ao ler: ${error}`);
-      }
-
-      const html5QrCode = new Html5Qrcode("qr-reader");
-      html5QrCode
-        .start(
-          { facingMode: "environment" },
-          {
-            fps: 10,
-            qrbox: 250,
-          },
-          onScanSuccess,
-          onScanFailure
-        )
-        .catch((err) => {
-          console.error("Erro ao iniciar câmera:", err);
-          alert("❌ Erro ao acessar a câmera. Verifique as permissões!");
-        });
-    </script>
-  </body>
+  <script src="./script/scanner.js"></script>
+</body>
 </html>

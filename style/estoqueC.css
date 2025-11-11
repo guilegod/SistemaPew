@@ -466,3 +466,26 @@ body {
   background-color: #15803d;
   transform: scale(1.05);
 }
+/* Ajusta a posição do selo */
+.badge-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ffcc00;
+  color: #000;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Mantém o título (rastro) limpo */
+.card-bobina h3 {
+  margin-top: 30px; /* espaço para o selo */
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.2rem;
+}

@@ -3,63 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Detalhes da Bobina - Sistema Bundy</title>
-  <link rel="stylesheet" href="./style/style.css" />
+  <title>Bobina - Detalhes</title>
+  <link rel="stylesheet" href="./style.css" />
   <style>
-    .bobina-box{background:#142c44;color:#e2e8f0;border-radius:12px;padding:20px;width:90%;max-width:520px;margin:50px auto;box-shadow:0 0 12px rgba(0,0,0,.5)}
-    h1{color:#5fa8d3;text-align:center}
-    p{margin:8px 0}
-    .actions{margin-top:12px;text-align:center}
-    .actions a{color:#5fa8d3}
+    body {
+      background:#0a192f;
+      color:#fff;
+      font-family:sans-serif;
+      padding:20px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+    }
+    .container {
+      background:#142c44;
+      border-radius:12px;
+      padding:25px;
+      width:90%;
+      max-width:520px;
+      box-shadow:0 0 15px rgba(0,0,0,0.3);
+    }
+    h1 {
+      text-align:center;
+      color:#5fa8d3;
+      margin-bottom:20px;
+    }
+    ul {
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+    li {
+      margin-bottom:10px;
+      border-bottom:1px solid rgba(255,255,255,0.1);
+      padding-bottom:8px;
+    }
+    img {
+      display:block;
+      margin:20px auto;
+      border-radius:10px;
+      border:2px solid #5fa8d3;
+    }
+    .buttons {
+      display:flex;
+      justify-content:space-between;
+      margin-top:20px;
+    }
+    button {
+      background:#2563eb;
+      border:none;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      flex:1;
+      margin:0 5px;
+      transition:0.2s;
+    }
+    button:hover {
+      filter:brightness(1.15);
+    }
+    .loading {
+      text-align:center;
+      font-size:18px;
+      color:#a3c9f1;
+    }
+    .error {
+      text-align:center;
+      color:#ff6b6b;
+      font-weight:bold;
+    }
   </style>
 </head>
 <body>
-  <main class="content">
+  <div class="container">
     <h1>📦 Detalhes da Bobina</h1>
-    <div id="bobinaInfo" class="bobina-box">Carregando...</div>
-    <div class="actions">
-      <a href="scanner.html">📷 Ler outro QR</a> • <a href="index.html">🏠 Início</a>
-    </div>
-  </main>
+    <div id="conteudo" class="loading">Carregando dados...</div>
+  </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const rastro = decodeURIComponent(params.get("rastro") || "");
-    const bobinas = JSON.parse(localStorage.getItem("bobinas")) || [];
-    const b = bobinas.find(x => (x.rastro||"").trim() === rastro.trim());
-    const box = document.getElementById("bobinaInfo");
+    // 🔗 IP fixo do backend FastAPI (use o IP local do seu PC)
+    const API_URL = "http://192.168.18.3:8000/bobinas";
 
-    if (b) {
-      box.innerHTML = `
-        <p><strong>Rastro:</strong> ${b.rastro}</p>
-        <p><strong>Data:</strong> ${b.data || "-"}</p>
-        <p><strong>Tipo:</strong> ${b.tipo || "-"}</p>
-        <p><strong>Diâmetro:</strong> ${b.diametro || "-"}</p>
-        <p><strong>Furos:</strong> ${b.furos ?? "-"}</p>
-        <p><strong>Comprimento:</strong> ${b.comprimento || "-"} m</p>
-        <p><strong>Peso:</strong> ${b.peso ?? "-"} kg</p>
-        <p><strong>Status:</strong> ${b.status || "-"}</p>
-        <p><strong>Observações:</strong> ${b.observacoes || "Nenhuma"}</p>
-        <p><strong>Turno:</strong> ${b.turno || "-"}</p>
-      `;
-    } else {
-      box.innerHTML = `<p>❌ Bobina "${rastro}" não encontrada no dispositivo.</p>
-                       <p>Verifique se ela foi cadastrada neste aparelho.</p>`;
+    async function carregarBobina() {
+      const params = new URLSearchParams(window.location.search);
+      const rastro = params.get("rastro");
+      const conteudo = document.getElementById("conteudo");
+
+      if (!rastro) {
+        conteudo.innerHTML = "<p class='error'>❌ Nenhum rastro informado na URL.</p>";
+        return;
+      }
+
+      try {
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error("Falha ao conectar com o servidor.");
+        const todas = await res.json();
+        const bobina = todas.find(b => b.rastro === rastro);
+
+        if (!bobina) {
+          conteudo.innerHTML = `<p class='error'>❌ Bobina ${rastro} não encontrada.</p>`;
+          return;
+        }
+
+        conteudo.innerHTML = `
+          <ul>
+            <li><b>Rastro:</b> ${bobina.rastro}</li>
+            <li><b>Data:</b> ${bobina.data}</li>
+            <li><b>Operador:</b> ${bobina.operador}</li>
+            <li><b>Linha:</b> ${bobina.linha}</li>
+            <li><b>Status:</b> ${bobina.status}</li>
+            <li><b>Tipo:</b> ${bobina.tipo}</li>
+            <li><b>Diâmetro:</b> ${bobina.diametro}</li>
+            <li><b>Furos:</b> ${bobina.furos}</li>
+            <li><b>Peso:</b> ${bobina.peso} kg</li>
+            <li><b>Comprimento:</b> ${bobina.comprimento} mm</li>
+            <li><b>Turno:</b> ${bobina.turno}</li>
+          </ul>
+          ${
+            bobina.qrCode
+              ? `<img src="${bobina.qrCode}" width="200" alt="QR Code">`
+              : ""
+          }
+          <div class="buttons">
+            <button onclick="window.history.back()">⬅️ Voltar</button>
+            <button onclick="window.print()">🖨️ Imprimir</button>
+          </div>
+        `;
+      } catch (err) {
+        conteudo.innerHTML = `<p class='error'>⚠️ Erro ao carregar: ${err.message}</p>`;
+      }
     }
+
+    carregarBobina();
   </script>
-  <script>
-  const sidebar = document.getElementById('sidebar');
-  const toggleBtn = document.getElementById('toggleMenu');
-
-  toggleBtn.addEventListener('click', () => {
-    toggleBtn.classList.toggle('active');
-    if (window.innerWidth <= 768) {
-      sidebar.classList.toggle('active');
-    } else {
-      sidebar.classList.toggle('hidden');
-    }
-  });
-</script>
-
 </body>
 </html>

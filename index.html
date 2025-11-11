@@ -46,6 +46,19 @@
     <script src="./script/menu.js"></script>
    
     <script src="./script/setorAcesso.js"></script>
+    <script>
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleMenu');
+
+  toggleBtn.addEventListener('click', () => {
+    toggleBtn.classList.toggle('active');
+    if (window.innerWidth <= 768) {
+      sidebar.classList.toggle('active');
+    } else {
+      sidebar.classList.toggle('hidden');
+    }
+  });
+</script>
   
 
   </body>
