@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // ====== Envia para o servidor FastAPI ======
     try {
-      const response = await fetch("http://127.0.0.1:8000/bobinas", {
+      const response = await fetch("https://sistemapew.onrender.com/bobinas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bobina),

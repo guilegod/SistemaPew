@@ -6,10 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // ================================
   // Helpers
   // ================================
-  const API_HOST = window.location.hostname.includes("192.168")
-    ? `http://${window.location.hostname}:8000`
-    : "http://127.0.0.1:8000";
-  const API_URL = `${API_HOST}/bobinas`;
+ // Detecta automaticamente se está rodando localmente ou no servidor Render
+const API_URL = window.location.hostname.includes("192.168") || window.location.hostname.includes("localhost")
+  ? "http://127.0.0.1:8000/bobinas" // Local (para testes)
+  : "https://sistemapew.onrender.com/bobinas"; // Produção (Render)
+
 
   const getBobinasLocal = () => JSON.parse(localStorage.getItem("bobinas")) || [];
   const setBobinasLocal = (arr) => localStorage.setItem("bobinas", JSON.stringify(arr || []));
@@ -138,7 +139,7 @@ async function abrirDetalhes(bobina) {
   injectModalCssOnce();
 
   // 🔗 IP fixo da sua máquina — para o QRCode apontar corretamente no celular
-  const backendHost = "192.168.18.3:5500"; // <- se o front roda na porta 5500
+  const backendHost = "https://sistemapew.onrender.com"; // <- se o front roda na porta 5500
   const qr = await gerarQRBase64(`http://${backendHost}/bobina.html?rastro=${bobina.rastro}`, 180);
 
   const holder = modal.querySelector("#qrHolder");
